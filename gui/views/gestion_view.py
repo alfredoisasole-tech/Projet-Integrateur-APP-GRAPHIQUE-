@@ -34,9 +34,10 @@ from gui.theme import (
 class GestionView(tk.Frame):
     """Écran Gestion — CRUD Produit / Lot / Cellule."""
 
-    def __init__(self, parent, api_url):
+    def __init__(self, parent, api_url, on_data_changed=None):
         super().__init__(parent, bg=SURFACE)
         self.api_url = api_url
+        self.on_data_changed = on_data_changed
         self.current_tab = "produits"
         self._build_ui()
 
@@ -521,5 +522,8 @@ class GestionView(tk.Frame):
         if ok:
             messagebox.showinfo("Succès", success_msg)
             self.refresh()
+            # Notifier les autres vues (ex: cartographie) du changement
+            if self.on_data_changed:
+                self.on_data_changed()
         else:
             messagebox.showerror("Erreur", data.get("message", "Erreur inconnue"))

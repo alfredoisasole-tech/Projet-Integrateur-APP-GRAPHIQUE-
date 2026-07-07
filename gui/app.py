@@ -86,11 +86,22 @@ class WMSApplication(tk.Tk):
             "expedition": ExpeditionView(self.content, self.api_url),
             "inventaire": InventaireView(self.content, self.api_url),
             "rapports": RapportsView(self.content, self.api_url),
-            "gestion": GestionView(self.content, self.api_url),
+            "gestion": GestionView(
+                self.content, self.api_url, on_data_changed=self._on_data_changed
+            ),
             "admin": AdminView(self.content, self.api_url),
         }
 
         self.current_view = None
+
+    def _on_data_changed(self):
+        """Callback invoqué quand les données sont modifiées (CRUD gestion).
+
+        Rafraîchit les vues cartographie et dashboard si elles sont
+        actuellement affichées, pour refléter les changements immédiatement.
+        """
+        if self.current_view in ("cartographie", "dashboard"):
+            self.views[self.current_view].refresh()
 
     def show_view(self, name):
         """Change la vue affichée dans la zone de contenu.
