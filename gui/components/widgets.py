@@ -320,7 +320,7 @@ class ZoneMap(tk.Frame):
         )
         self.pct_label = tk.Label(
             header,
-            text=f"{int(occupation_pct)}%",
+            text=f"{round(occupation_pct)}%",
             font=("Consolas", 10, "bold"),
             bg=SURFACE_CONTAINER_HIGH,
             fg=occ_color,
