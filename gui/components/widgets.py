@@ -344,7 +344,7 @@ class ZoneMap(tk.Frame):
             if occupation_pct < 60
             else WARNING if occupation_pct < 85 else ERROR
         )
-        self.pct_label.config(text=f"{int(occupation_pct)}%", fg=occ_color)
+        self.pct_label.config(text=f"{round(occupation_pct)}%", fg=occ_color)
 
     def _draw_cells(self, cellules):
         """Dessine les cellules sur le canvas."""
